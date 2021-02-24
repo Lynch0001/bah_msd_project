@@ -10,25 +10,24 @@ import com.bah.project.dataservice.domain.Customer;
 @Repository
 public class CustomerRepositoryImpl{
 
-	
+
+	static private List<Customer> customersList = new ArrayList<Customer>();
+
+	static {
+		customersList.add(new Customer(1L, "john@mail.com", "John Smith", "password"));
+		customersList.add(new Customer(2L, "jane@mail.com", "Jane Smith", "password"));
+	}
 	
 	public Customer getCustomer(int id) {
 
-		List<Customer> customers = new ArrayList<Customer>();
-		customers.add(new Customer(1L, "john@mail.com", "John Smith", "password"));
-		customers.add(new Customer(2L, "jane@mail.com", "Jane Smith", "password"));
 		
-		return customers.get(id-1);
+		return customersList.get(id-1);
 	}
 	
 	
 	public List<Customer> getAllCustomers() {
 
-		List<Customer> customers = new ArrayList<Customer>();
-		customers.add(new Customer(1L, "john@mail.com", "John Smith", "password"));
-		customers.add(new Customer(2L, "jane@mail.com", "Jane Smith", "password"));
-		
-		return customers;
+		return customersList;
 	}
 	
 	public Customer addCustomer(Customer customer) {
@@ -37,7 +36,8 @@ public class CustomerRepositoryImpl{
 		newCustomer.setName(customer.getName());
 		newCustomer.setEmail(customer.getEmail());
 		newCustomer.setPassword(customer.getPassword());
-		return newCustomer;
+		customersList.add(newCustomer);
+		return customersList.get(customersList.size()-1);
 	}		
 		
 		
