@@ -2,7 +2,7 @@ package com.bah.project.dataservice.domain;
 
 public class Customer {
 	
-	private Long id;
+	private Integer id;
 	private String email;
 	private String name;
 	private String password;
@@ -11,7 +11,7 @@ public class Customer {
 	
 	public Customer() {}
 
-	public Customer(Long id, String email, String name, String password) {
+	public Customer(Integer id, String email, String name, String password) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -19,11 +19,11 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

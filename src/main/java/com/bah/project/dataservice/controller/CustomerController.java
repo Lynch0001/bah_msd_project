@@ -3,9 +3,12 @@ package com.bah.project.dataservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bah.project.dataservice.domain.Customer;
@@ -29,8 +32,17 @@ public class CustomerController {
 	}
 
 	@PostMapping("/customer")
-	public Customer addCustomer(Customer customer) {
+	public Customer addCustomer(@RequestBody Customer customer) {
 		return customerRepositoryImpl.addCustomer(customer);
 	}
 	
+	@PutMapping("/customer")
+	public Customer editCustomer(@RequestBody Customer customer) {
+		return customerRepositoryImpl.editCustomer(customer);
+	}
+	
+	@DeleteMapping("/customer/{id}")
+	public void deleteCustomer(@PathVariable int id) {
+		customerRepositoryImpl.deleteCustomer(id);
+	}
 }
