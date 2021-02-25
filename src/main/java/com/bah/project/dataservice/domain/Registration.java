@@ -2,9 +2,20 @@ package com.bah.project.dataservice.domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="registrations")
 public class Registration {
 
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String customer_name;
 	private String event_name;
 	private Date date;
@@ -14,7 +25,7 @@ public class Registration {
 		super();
 	}
 
-	public Registration(Integer id, String customer_name, String event_name, Date date, String notes) {
+	public Registration(Long id, String customer_name, String event_name, Date date, String notes) {
 		super();
 		this.id = id;
 		this.customer_name = customer_name;
@@ -23,11 +34,11 @@ public class Registration {
 		this.notes = notes;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

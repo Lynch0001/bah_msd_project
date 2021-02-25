@@ -1,8 +1,10 @@
 package com.bah.project.dataservice.controller;
 
-import java.util.List;
+import java.net.URI;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,41 +12,70 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bah.project.dataservice.domain.Registration;
-import com.bah.project.dataservice.service.RegistrationRepositoryImpl;
+import com.bah.project.dataservice.service.RegistrationService;
 
 @RestController
 public class RegistrationController {
 
 
 	@Autowired
-	private RegistrationRepositoryImpl registrationRepositoryImpl;
+	private RegistrationService registrationService;
 	
 	@GetMapping("/registration/{id}")
-	public Registration getRegistration(@PathVariable int id) {
-		return registrationRepositoryImpl.getRegistration(id);
+	public Optional<Registration> getRegistration(@PathVariable Long id) {
+		return registrationService.getRegistrationById(id);
 	}
 	
 	@GetMapping("/registration")
-	public List<Registration> getAllRegistrations() {
-		return registrationRepositoryImpl.getAllRegistrations();
+	public Iterable<Registration> getAllRegistrations() {
+		return registrationService.getAllRegistrations();
 
 	}
 
-	@PostMapping("/registration")
-	public Registration addRegistration(@RequestBody Registration registration) {
-		return registrationRepositoryImpl.addRegistration(registration);
-	}
 	
-	@PutMapping("/registration")
-	public Registration editRegistration(@RequestBody Registration registration) {
-		return registrationRepositoryImpl.editRegistration(registration);
-	}
+	  @PostMapping("/registration") 
+	  public ResponseEntity<?> addRegistration(@RequestBody Registration registration, ServletUriComponentsBuilder uri) {
+	  if(registration.getId() != 0 || registration.getCustomer_name() == null ||
+	  registration.getEvent_name() == null || registration.getDate() == null ||
+	  registration.getNotes() == null) { return
+	  ResponseEntity.badRequest().build(); }
+	  
+	  Registration newRegistration = registrationService.addRegistration(registration); 
+	  
+	  URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newRegistration.getId()).toUri();
+		ResponseEntity<?> response = ResponseEntity.created(location).build();
+	  
+	  return response;
+	  }
+	
+	
+	  @PutMapping("/registration/{id}") 
+	  public ResponseEntity<?> editRegistration(@RequestBody Registration registration, @PathVariable Long id) { 
+
+		if(registration.getId() != id || 
+		registration.getEvent_name() == null || 
+		registration.getCustomer_name() == null ||
+		registration.getDate() == null ||
+		registration.getNotes() == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		registrationService.editRegistration(registration);
+		return ResponseEntity.ok().build();  
+	  }	  
+	 
 	
 	@DeleteMapping("/registration/{id}")
-	public void deleteRegistration(@PathVariable int id) {
-		registrationRepositoryImpl.deleteRegistration(id);
+	public ResponseEntity<?> deleteRegistration(@PathVariable Long id) {
+		if(registrationService.getRegistrationById(id) == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		registrationService.deleteRegistration(id);
+		return ResponseEntity.ok().build(); 
 	}
 }
 

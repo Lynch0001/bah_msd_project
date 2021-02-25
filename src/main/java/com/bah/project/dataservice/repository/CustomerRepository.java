@@ -2,16 +2,13 @@ package com.bah.project.dataservice.repository;
 
 
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.bah.project.dataservice.domain.Customer;
 
-public interface CustomerRepository {
+@Repository
+public interface CustomerRepository extends CrudRepository<Customer, Long>{
 
-	public Customer getCustomer(Long id);
-	public List<Customer> getAllCustomers();
-	public Customer addCustomer(Customer customer);
-	public Customer editCustomer(Customer customer);
-	public void deleteCustomer(Long id);
 	
 }
