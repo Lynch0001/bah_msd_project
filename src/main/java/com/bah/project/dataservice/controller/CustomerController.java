@@ -1,8 +1,10 @@
 package com.bah.project.dataservice.controller;
 
-import java.util.List;
+import java.net.URI;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,39 +12,67 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bah.project.dataservice.domain.Customer;
-import com.bah.project.dataservice.service.CustomerRepositoryImpl;
+import com.bah.project.dataservice.service.CustomerService;
 
 @RestController
 public class CustomerController {
 
 	@Autowired
-	private CustomerRepositoryImpl customerRepositoryImpl;
+	private CustomerService customerService;
 	
 	@GetMapping("/customer/{id}")
-	public Customer getCustomer(@PathVariable int id) {
-		return customerRepositoryImpl.getCustomer(id);
+	public Optional<Customer> getCustomer(@PathVariable Long id) {
+		return customerService.getCustomer(id);
 	}
 	
 	@GetMapping("/customer")
-	public List<Customer> getAllCustomers() {
-		return customerRepositoryImpl.getAllCustomers();
+	public Iterable<Customer> getAllCustomers() {
+		return customerService.getAllCustomers();
 
 	}
 
 	@PostMapping("/customer")
-	public Customer addCustomer(@RequestBody Customer customer) {
-		return customerRepositoryImpl.addCustomer(customer);
+	public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+	  if(customer.getId() != 0 || 
+			  customer.getName() == null ||
+			  customer.getPassword()== null ||
+			  customer.getEmail() == null) 
+	  { 
+		  return ResponseEntity.badRequest().build(); 
+		  }
+		  
+		  Customer newCustomer = customerService.addCustomer(customer); 
+		  
+		  URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(newCustomer.getId()).toUri();
+			ResponseEntity<?> response = ResponseEntity.created(location).build();
+		  
+		  return response;
 	}
 	
 	@PutMapping("/customer")
-	public Customer editCustomer(@RequestBody Customer customer) {
-		return customerRepositoryImpl.editCustomer(customer);
+	public ResponseEntity<?> editCustomer(@RequestBody Customer customer, @PathVariable Long id) {
+
+		if(customer.getId() != id || 
+		customer.getName()== null || 
+		customer.getEmail() == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		customerService.editCustomer(customer);
+		return ResponseEntity.ok().build();
+		
 	}
 	
 	@DeleteMapping("/customer/{id}")
-	public void deleteCustomer(@PathVariable int id) {
-		customerRepositoryImpl.deleteCustomer(id);
+	public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+		if(customerService.getCustomer(id) == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		customerService.deleteCustomer(id);
+		return ResponseEntity.ok().build(); 
 	}
 }

@@ -1,8 +1,18 @@
 package com.bah.project.dataservice.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="CUSTOMERS")
 public class Customer {
-	
-	private Integer id;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String email;
 	private String name;
 	private String password;
@@ -11,7 +21,7 @@ public class Customer {
 	
 	public Customer() {}
 
-	public Customer(Integer id, String email, String name, String password) {
+	public Customer(Long id, String email, String name, String password) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -19,11 +29,11 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
