@@ -1,5 +1,6 @@
 package com.bah.project.dataservice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,16 +13,20 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
+	
 	private String email;
+	
+	@Column(name="customer_name")
 	private String name;
+	
 	private String password;
 	
 	
 	
 	public Customer() {}
 
-	public Customer(Long id, String email, String name, String password) {
+	public Customer(Integer id, String email, String name, String password) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -29,11 +34,11 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
