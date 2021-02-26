@@ -24,7 +24,7 @@ public class EventController {
 	private EventService eventService;
 	
 	@GetMapping("/event/{id}")
-	public Optional<Event> getEvent(@PathVariable Long id) {
+	public Optional<Event> getEvent(@PathVariable Integer id) {
 		return eventService.getEventOptional(id);
 	}
 	
@@ -52,7 +52,7 @@ public Iterable<Event> getAllEvents() {
 	
 	
 	@PutMapping("/event/{id}")
-	public ResponseEntity<?> editEvent(@RequestBody Event event, @PathVariable Long id ){
+	public ResponseEntity<?> editEvent(@RequestBody Event event, @PathVariable Integer id ){
 
 	if(event.getId()!= id ||
 	event.getTitle() == null ||
@@ -65,7 +65,7 @@ public Iterable<Event> getAllEvents() {
 }
 	
 @DeleteMapping("/event/{id}")
-public ResponseEntity<?> deleteEvent(@PathVariable Long id){
+public ResponseEntity<?> deleteEvent(@PathVariable Integer id){
 	if(eventService.getEventOptional(id) == null) {
 	 return ResponseEntity.badRequest().build();
 	}

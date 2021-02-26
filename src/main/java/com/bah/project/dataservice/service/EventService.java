@@ -13,7 +13,7 @@ public class EventService{
 	@Autowired
 	private EventRepository eventRepository;
 	
-public Optional<Event> getEventOptional(Long id) {
+public Optional<Event> getEventOptional(Integer id) {
 	return eventRepository.findById(id);
 	}
 	
@@ -29,7 +29,7 @@ public Event editEvent(Event event) {
 	 return eventRepository.save(event);
 		 
 	 }
-public void deleteEvent(Long id) {
+public void deleteEvent(Integer id) {
 	eventRepository.deleteById(id);
 	 
 }

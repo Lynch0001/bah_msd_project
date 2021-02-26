@@ -1,5 +1,6 @@
 package com.bah.project.dataservice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +15,8 @@ public class Event {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)	
-private Long id;
-
+private Integer id;
+@Column(name="event_code")
 private String code;
 
 private String description;
@@ -27,7 +28,7 @@ private String title;
 
 
 
-public Event(Long id, String code, String description, String title) {
+public Event(Integer id, String code, String description, String title) {
 	super();
 	this.id = id;
 	this.code = code;
@@ -35,11 +36,11 @@ public Event(Long id, String code, String description, String title) {
 	this.title = title;
 }
 
-public Long getId() {
+public Integer getId() {
 	return id;
 }
 
-public void setId(Long id) {
+public void setId(Integer id) {
 	this.id = id;
 }
 
