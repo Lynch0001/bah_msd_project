@@ -19,7 +19,7 @@ public class RegistrationService{
 		return registrationRepository.findAll();
 	}	
 	
-	public Optional<Registration> getRegistrationById(Long id) {
+	public Optional<Registration> getRegistrationById(Integer id) {
 		return registrationRepository.findById(id);
 	}
 
@@ -32,7 +32,7 @@ public class RegistrationService{
 		return registrationRepository.save(registration);
 	}
 
-	public void deleteRegistration(Long id) {
+	public void deleteRegistration(Integer id) {
 		registrationRepository.deleteById(id);
 	}
 

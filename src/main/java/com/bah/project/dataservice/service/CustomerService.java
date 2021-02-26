@@ -16,7 +16,7 @@ public class CustomerService{
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	public Optional<Customer> getCustomer(Long id) {
+	public Optional<Customer> getCustomer(Integer id) {
 		return customerRepository.findById(id);
 	}
 	
@@ -32,7 +32,7 @@ public class CustomerService{
 		return customerRepository.save(customer);
 	}
 	
-	public void deleteCustomer(Long id) {
+	public void deleteCustomer(Integer id) {
 		customerRepository.deleteById(id);
 	}
 		

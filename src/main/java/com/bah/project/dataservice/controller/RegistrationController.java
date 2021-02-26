@@ -25,7 +25,7 @@ public class RegistrationController {
 	private RegistrationService registrationService;
 	
 	@GetMapping("/registration/{id}")
-	public Optional<Registration> getRegistration(@PathVariable Long id) {
+	public Optional<Registration> getRegistration(@PathVariable Integer id) {
 		return registrationService.getRegistrationById(id);
 	}
 	
@@ -38,8 +38,8 @@ public class RegistrationController {
 	
 	  @PostMapping("/registration") 
 	  public ResponseEntity<?> addRegistration(@RequestBody Registration registration, ServletUriComponentsBuilder uri) {
-	  if(registration.getId() != 0 || registration.getCustomer_name() == null ||
-	  registration.getEvent_name() == null || registration.getDate() == null ||
+	  if(registration.getId() != 0 || registration.getCustomer_id() == null ||
+	  registration.getEvent_id() == null || registration.getDate() == null ||
 	  registration.getNotes() == null) { return
 	  ResponseEntity.badRequest().build(); }
 	  
@@ -54,11 +54,11 @@ public class RegistrationController {
 	
 	
 	  @PutMapping("/registration/{id}") 
-	  public ResponseEntity<?> editRegistration(@RequestBody Registration registration, @PathVariable Long id) { 
+	  public ResponseEntity<?> editRegistration(@RequestBody Registration registration, @PathVariable Integer id) { 
 
 		if(registration.getId() != id || 
-		registration.getEvent_name() == null || 
-		registration.getCustomer_name() == null ||
+		registration.getEvent_id() == null || 
+		registration.getCustomer_id() == null ||
 		registration.getDate() == null ||
 		registration.getNotes() == null) {
 			return ResponseEntity.badRequest().build();
@@ -70,7 +70,7 @@ public class RegistrationController {
 	 
 	
 	@DeleteMapping("/registration/{id}")
-	public ResponseEntity<?> deleteRegistration(@PathVariable Long id) {
+	public ResponseEntity<?> deleteRegistration(@PathVariable Integer id) {
 		if(registrationService.getRegistrationById(id) == null) {
 			return ResponseEntity.badRequest().build();
 		}

@@ -2,6 +2,7 @@ package com.bah.project.dataservice.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,47 +16,52 @@ public class Registration {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String customer_name;
-	private String event_name;
+	private Integer id;
+	
+	private Integer customer_id;
+	
+	private Integer event_id;
+	
+	@Column(name="registration_date")
 	private Date date;
+	
 	private String notes;
 	
 	public Registration() {
 		super();
 	}
 
-	public Registration(Long id, String customer_name, String event_name, Date date, String notes) {
+	public Registration(Integer id, Integer customer_id, Integer event_id, Date date, String notes) {
 		super();
 		this.id = id;
-		this.customer_name = customer_name;
-		this.event_name = event_name;
+		this.customer_id = customer_id;
+		this.event_id = event_id;
 		this.date = date;
 		this.notes = notes;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getCustomer_name() {
-		return customer_name;
+	public Integer getCustomer_id() {
+		return customer_id;
 	}
 
-	public void setCustomer_name(String customer_name) {
-		this.customer_name = customer_name;
+	public void setCustomer_id(Integer customer_id) {
+		this.customer_id = customer_id;
 	}
 
-	public String getEvent_name() {
-		return event_name;
+	public Integer getEvent_id() {
+		return event_id;
 	}
 
-	public void setEvent_name(String event_name) {
-		this.event_name = event_name;
+	public void setEvent_id(Integer event_id) {
+		this.event_id = event_id;
 	}
 
 	public Date getDate() {
@@ -76,7 +82,7 @@ public class Registration {
 
 	@Override
 	public String toString() {
-		return "Registration [id=" + id + ", customer_name=" + customer_name + ", event_name=" + event_name + ", date="
+		return "Registration [id=" + id + ", customer_id=" + customer_id + ", event_id=" + event_id + ", date="
 				+ date + ", notes=" + notes + "]";
 	}
 	

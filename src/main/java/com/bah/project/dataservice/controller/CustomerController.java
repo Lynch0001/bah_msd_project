@@ -24,7 +24,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@GetMapping("/customer/{id}")
-	public Optional<Customer> getCustomer(@PathVariable Long id) {
+	public Optional<Customer> getCustomer(@PathVariable Integer id) {
 		return customerService.getCustomer(id);
 	}
 	
@@ -54,7 +54,7 @@ public class CustomerController {
 	}
 	
 	@PutMapping("/customer")
-	public ResponseEntity<?> editCustomer(@RequestBody Customer customer, @PathVariable Long id) {
+	public ResponseEntity<?> editCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
 
 		if(customer.getId() != id || 
 		customer.getName()== null || 
@@ -68,7 +68,7 @@ public class CustomerController {
 	}
 	
 	@DeleteMapping("/customer/{id}")
-	public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCustomer(@PathVariable Integer id) {
 		if(customerService.getCustomer(id) == null) {
 			return ResponseEntity.badRequest().build();
 		}
