@@ -3,6 +3,8 @@ package com.bah.project.dataservice.controller;
 import java.net.URI;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,21 +22,30 @@ import com.bah.project.dataservice.service.CustomerService;
 @RestController
 public class CustomerController {
 
+	private static Logger log = LoggerFactory.getLogger(CustomerController.class);
+	
 	@Autowired
 	private CustomerService customerService;
 	
-	@GetMapping("/customer/{id}")
-	public Optional<Customer> getCustomer(@PathVariable Integer id) {
+	@GetMapping("/customers/{customerId}")
+	public Optional<Customer> getCustomer(@PathVariable("customerId") Integer id) {
+		log.debug("Customer Controller - Get by Id - id received: ", id);
 		return customerService.getCustomer(id);
 	}
 	
-	@GetMapping("/customer")
+	@PostMapping("/customers/byname")
+	public Optional<Customer> getCustomerByName(@RequestBody String username) {
+		log.debug("Customer Controller - Get by Name Method - username received: ", username);
+		return customerService.getCustomerByName(username);
+	}
+	
+	@GetMapping("/customers")
 	public Iterable<Customer> getAllCustomers() {
 		return customerService.getAllCustomers();
 
 	}
 
-	@PostMapping("/customer")
+	@PostMapping("/customers")
 	public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
 	  if(customer.getId() != 0 || 
 			  customer.getName() == null ||
@@ -53,7 +64,7 @@ public class CustomerController {
 		  return response;
 	}
 	
-	@PutMapping("/customer")
+	@PutMapping("/customers/{id}")
 	public ResponseEntity<?> editCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
 
 		if(customer.getId() != id || 
@@ -67,7 +78,7 @@ public class CustomerController {
 		
 	}
 	
-	@DeleteMapping("/customer/{id}")
+	@DeleteMapping("/customers/{id}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable Integer id) {
 		if(customerService.getCustomer(id) == null) {
 			return ResponseEntity.badRequest().build();

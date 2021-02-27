@@ -23,17 +23,17 @@ public class EventController {
 	@Autowired
 	private EventService eventService;
 	
-	@GetMapping("/event/{id}")
+	@GetMapping("/events/{id}")
 	public Optional<Event> getEvent(@PathVariable Integer id) {
 		return eventService.getEventOptional(id);
 	}
 	
-@GetMapping("/event")
-public Iterable<Event> getAllEvents() {
-	return eventService.getAllEvents();
-}
+	@GetMapping("/events")
+	public Iterable<Event> getAllEvents() {
+		return eventService.getAllEvents();
+	}
 	
-	@PostMapping("/event")
+	@PostMapping("/events")
 	public ResponseEntity<?> addEvent(@RequestBody Event event, ServletUriComponentsBuilder uri) {
 		if (event.getId()!=0 || 
 				event.getTitle()== null ||
@@ -51,20 +51,20 @@ public Iterable<Event> getAllEvents() {
 }
 	
 	
-	@PutMapping("/event/{id}")
+	@PutMapping("/events/{id}")
 	public ResponseEntity<?> editEvent(@RequestBody Event event, @PathVariable Integer id ){
 
 	if(event.getId()!= id ||
-	event.getTitle() == null ||
-	event.getCode()== null ||
-	event.getDescription()== null )
+		event.getTitle() == null ||
+		event.getCode()== null ||
+		event.getDescription()== null )
 	{return ResponseEntity.badRequest().build();}
 	
 	eventService.editEvent(event);
 	return ResponseEntity.ok().build();
 }
 	
-@DeleteMapping("/event/{id}")
+@DeleteMapping("/events/{id}")
 public ResponseEntity<?> deleteEvent(@PathVariable Integer id){
 	if(eventService.getEventOptional(id) == null) {
 	 return ResponseEntity.badRequest().build();

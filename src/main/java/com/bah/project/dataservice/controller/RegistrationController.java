@@ -29,14 +29,14 @@ public class RegistrationController {
 		return registrationService.getRegistrationById(id);
 	}
 	
-	@GetMapping("/registration")
+	@GetMapping("/registrations")
 	public Iterable<Registration> getAllRegistrations() {
 		return registrationService.getAllRegistrations();
 
 	}
 
 	
-	  @PostMapping("/registration") 
+	  @PostMapping("/registrations") 
 	  public ResponseEntity<?> addRegistration(@RequestBody Registration registration, ServletUriComponentsBuilder uri) {
 	  if(registration.getId() != 0 || registration.getCustomer_id() == null ||
 	  registration.getEvent_id() == null || registration.getDate() == null ||
@@ -53,7 +53,7 @@ public class RegistrationController {
 	  }
 	
 	
-	  @PutMapping("/registration/{id}") 
+	  @PutMapping("/registrations/{id}") 
 	  public ResponseEntity<?> editRegistration(@RequestBody Registration registration, @PathVariable Integer id) { 
 
 		if(registration.getId() != id || 
@@ -69,7 +69,7 @@ public class RegistrationController {
 	  }	  
 	 
 	
-	@DeleteMapping("/registration/{id}")
+	@DeleteMapping("/registrations/{id}")
 	public ResponseEntity<?> deleteRegistration(@PathVariable Integer id) {
 		if(registrationService.getRegistrationById(id) == null) {
 			return ResponseEntity.badRequest().build();
