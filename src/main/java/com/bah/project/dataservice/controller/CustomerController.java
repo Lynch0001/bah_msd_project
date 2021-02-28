@@ -57,7 +57,7 @@ public class CustomerController {
 
 	@PostMapping("/customers")
 	public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
-	  if(customer.getId() != 0 || 
+	  if(customer.getId() != null ||                                         // for customer registration
 			  customer.getName() == null ||
 			  customer.getPassword()== null ||
 			  customer.getEmail() == null) 
