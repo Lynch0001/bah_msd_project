@@ -54,7 +54,7 @@ public class EventController {
 	@PutMapping("/events/{id}")
 	public ResponseEntity<?> editEvent(@RequestBody Event event, @PathVariable Integer id ){
 
-	if(event.getId()!= id ||
+	if(event.getId()== 0||
 		event.getTitle() == null ||
 		event.getCode()== null ||
 		event.getDescription()== null )

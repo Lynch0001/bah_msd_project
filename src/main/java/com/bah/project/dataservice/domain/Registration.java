@@ -23,7 +23,7 @@ public class Registration {
 	private Integer event_id;
 	
 	@Column(name="registration_date")
-	private Date date;
+	private Date registration_date;
 	
 	private String notes;
 	
@@ -31,12 +31,12 @@ public class Registration {
 		super();
 	}
 
-	public Registration(Integer id, Integer customer_id, Integer event_id, Date date, String notes) {
+	public Registration(Integer id, Integer customer_id, Integer event_id, Date registration_date, String notes) {
 		super();
 		this.id = id;
 		this.customer_id = customer_id;
 		this.event_id = event_id;
-		this.date = date;
+		this.registration_date = registration_date;
 		this.notes = notes;
 	}
 
@@ -64,12 +64,12 @@ public class Registration {
 		this.event_id = event_id;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getRegistration_date() {
+		return registration_date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setRegistration_date(Date registration_date) {
+		this.registration_date = registration_date;
 	}
 
 	public String getNotes() {
@@ -83,7 +83,7 @@ public class Registration {
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", customer_id=" + customer_id + ", event_id=" + event_id + ", date="
-				+ date + ", notes=" + notes + "]";
+				+ registration_date + ", notes=" + notes + "]";
 	}
 	
 	

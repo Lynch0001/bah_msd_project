@@ -1,6 +1,7 @@
 package com.bah.project.dataservice.controller;
 
 import java.net.URI;
+import java.util.Iterator;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -29,19 +30,28 @@ public class CustomerController {
 	
 	@GetMapping("/customers/{customerId}")
 	public Optional<Customer> getCustomer(@PathVariable("customerId") Integer id) {
-		log.debug("Customer Controller - Get by Id - id received: ", id);
+		log.debug("Customer Controller - Get by Id - id received: {}", id);
 		return customerService.getCustomer(id);
 	}
 	
 	@PostMapping("/customers/byname")
-	public Optional<Customer> getCustomerByName(@RequestBody String username) {
-		log.debug("Customer Controller - Get by Name Method - username received: ", username);
-		return customerService.getCustomerByName(username);
+	public Customer getCustomerByName(@RequestBody String username) {
+		log.debug("Customer Controller - Get by Name Method - username received: {}", username);
+		Iterable<Customer> customers = customerService.getAllCustomers();
+		for (Iterator<Customer> iterator = customers.iterator(); iterator.hasNext();) {
+			Customer customer = (Customer) iterator.next();
+			if(customer.getName() == username) {return customer;}
+			
+		}
+		// not found
+		return null;
 	}
 	
 	@GetMapping("/customers")
 	public Iterable<Customer> getAllCustomers() {
-		return customerService.getAllCustomers();
+		Iterable<Customer> customers = customerService.getAllCustomers();
+		log.debug("Customer Controller - Get All - customer list: {}", customers);
+		return customers;
 
 	}
 
@@ -63,12 +73,13 @@ public class CustomerController {
 		  
 		  return response;
 	}
-	
-	@PutMapping("/customers/{id}")
-	public ResponseEntity<?> editCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
 
-		if(customer.getId() != id || 
+	@PutMapping("/customers/{id}")
+	public ResponseEntity<?> editCustomer(@RequestBody Customer customer, @PathVariable("id") Integer id) {
+		log.debug("Customer Controller - Edit Customer Method - id received: {}", customer.getId());
+		if(customer.getId() == 0 || 
 		customer.getName()== null || 
+		customer.getPassword()== null || 
 		customer.getEmail() == null) {
 			return ResponseEntity.badRequest().build();
 		}

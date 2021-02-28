@@ -39,7 +39,7 @@ public class RegistrationController {
 	  @PostMapping("/registrations") 
 	  public ResponseEntity<?> addRegistration(@RequestBody Registration registration, ServletUriComponentsBuilder uri) {
 	  if(registration.getId() != 0 || registration.getCustomer_id() == null ||
-	  registration.getEvent_id() == null || registration.getDate() == null ||
+	  registration.getEvent_id() == null || registration.getRegistration_date() == null ||
 	  registration.getNotes() == null) { return
 	  ResponseEntity.badRequest().build(); }
 	  
@@ -56,10 +56,10 @@ public class RegistrationController {
 	  @PutMapping("/registrations/{id}") 
 	  public ResponseEntity<?> editRegistration(@RequestBody Registration registration, @PathVariable Integer id) { 
 
-		if(registration.getId() != id || 
+		if(registration.getId() == 0 || 
 		registration.getEvent_id() == null || 
 		registration.getCustomer_id() == null ||
-		registration.getDate() == null ||
+		registration.getRegistration_date() == null ||
 		registration.getNotes() == null) {
 			return ResponseEntity.badRequest().build();
 		}
