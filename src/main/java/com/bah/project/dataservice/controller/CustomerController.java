@@ -34,17 +34,14 @@ public class CustomerController {
 		return customerService.getCustomer(id);
 	}
 	
+	
+	// TODO Fix getCustomerByName (returning null with valid username)
+	
+	
 	@PostMapping("/customers/byname")
 	public Customer getCustomerByName(@RequestBody String username) {
 		log.debug("Customer Controller - Get by Name Method - username received: {}", username);
-		Iterable<Customer> customers = customerService.getAllCustomers();
-		for (Iterator<Customer> iterator = customers.iterator(); iterator.hasNext();) {
-			Customer customer = (Customer) iterator.next();
-			if(customer.getName() == username) {return customer;}
-			
-		}
-		// not found
-		return null;
+		return customerService.getCustomerByName(username);
 	}
 	
 	@GetMapping("/customers")

@@ -24,8 +24,8 @@ public class CustomerService{
 		return customerRepository.findById(id);
 	}
 	
-	public Optional<Customer> getCustomerByName(String name) {
-		log.debug("Customer Service - Get by Name Method - name received: ", name);
+	public Customer getCustomerByName(String name) {
+		log.debug("Customer Service - Get by Name Method - name received: {}", name);
 		return customerRepository.findByName(name);
 	}
 	

@@ -11,6 +11,6 @@ import com.bah.project.dataservice.domain.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 
-	Optional<Customer> findByName(String name);
+	Customer findByName(String name);
 
 }
