@@ -35,9 +35,7 @@ public class CustomerController {
 	}
 	
 	
-	// TODO Fix getCustomerByName (returning null with valid username)
-	
-	
+
 	@PostMapping("/customers/byname")
 	public Customer getCustomerByName(@RequestBody String username) {
 		log.debug("Customer Controller - Get by Name Method - username received: {}", username);
