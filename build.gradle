@@ -29,6 +29,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.hsqldb/hsqldb
 	compile group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
 	
+	implementation group: 'com.auth0', name: 'java-jwt', version: '3.13.0'
 }
 
 test {
