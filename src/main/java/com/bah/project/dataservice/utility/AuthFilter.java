@@ -47,9 +47,9 @@ public class AuthFilter implements Filter {
 			
 			String authheader = req.getHeader("authorization");
 
-			// log.debug("AUTH FILTER - Auth header: {}", authheader);
-			// log.debug("AUTH FILTER - Auth header length: {}", authheader.length());
-			// log.debug("AUTH FILTER - Auth header: {}", authheader.substring(0));
+			log.debug("AUTH FILTER - Auth header: {}", authheader);
+			log.debug("AUTH FILTER - Auth header length: {}", authheader.length());
+			log.debug("AUTH FILTER - Auth header: {}", authheader.substring(0));
 			if (authheader != null && authheader.length() > 7 && authheader.startsWith("Bearer")) {
 				
 				String jwt_token = authheader.substring(7, authheader.length());

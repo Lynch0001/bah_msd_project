@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bah.project.dataservice.domain.Customer;
 import com.bah.project.dataservice.service.CustomerService;
@@ -35,12 +36,21 @@ public class CustomerController {
 	}
 	
 	
-
-	@PostMapping("/customers/byname")
-	public Customer getCustomerByName(@RequestBody String username) {
+	@GetMapping("/customers/byname/{username}")
+	public ResponseEntity<?> getCustomerByNameFromAuthService(@PathVariable String username, UriComponentsBuilder uri) {
 		log.debug("Customer Controller - Get by Name Method - username received: {}", username);
-		return customerService.getCustomerByName(username);
+		Customer customer = customerService.getCustomerByName(username);
+		return ResponseEntity.ok(customer);
 	}
+	
+	
+	@PostMapping("/customers/byname")
+	public ResponseEntity<?> getCustomerByNameFromReact(@RequestBody String username, UriComponentsBuilder uri) {
+		log.debug("Customer Controller - Get by Name Method - username received: {}", username);
+		Customer customer = customerService.getCustomerByName(username);
+		return ResponseEntity.ok(customer);
+	}
+	
 	
 	@GetMapping("/customers")
 	public Iterable<Customer> getAllCustomers() {
