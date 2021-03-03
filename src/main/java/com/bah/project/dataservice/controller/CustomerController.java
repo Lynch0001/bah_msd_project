@@ -1,7 +1,6 @@
 package com.bah.project.dataservice.controller;
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.Optional;
 
 import org.slf4j.Logger;
