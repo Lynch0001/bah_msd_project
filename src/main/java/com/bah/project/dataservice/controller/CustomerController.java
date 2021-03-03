@@ -28,8 +28,8 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	@GetMapping("/customers/{customerId}")
-	public Optional<Customer> getCustomer(@PathVariable("customerId") Integer id) {
+	@GetMapping("/customers/{id}")
+	public Optional<Customer> getCustomer(@PathVariable("id") Integer id) {
 		log.debug("Customer Controller - Get by Id - id received: {}", id);
 		return customerService.getCustomer(id);
 	}
@@ -47,7 +47,12 @@ public class CustomerController {
 	public ResponseEntity<?> getCustomerByNameFromReact(@RequestBody String username, UriComponentsBuilder uri) {
 		log.debug("Customer Controller - Get by Name Method - username received: {}", username);
 		Customer customer = customerService.getCustomerByName(username);
-		return ResponseEntity.ok(customer);
+		//return ResponseEntity.ok(customer);
+		
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(customer.getId()).toUri();
+		
+		return ResponseEntity.created(location).build();
 	}
 	
 	
