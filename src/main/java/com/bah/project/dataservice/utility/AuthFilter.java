@@ -40,6 +40,7 @@ public class AuthFilter implements Filter {
 		String uri = req.getRequestURI();
 		log.debug("AUTH FILTER - uri: {}", uri);
 		
+		
 		// URI starts with API
 		
 		
