@@ -1,9 +1,11 @@
-FROM openjdk
+FROM gradle:jdk10 as builder
+COPY --chown=gradle:gradle . /app
+WORKDIR /app
+RUN gradle bootJar
 
-WORKDIR /APP
-
-COPY ./build/libs/dataservice-0.0.1-SNAPSHOT.jar/APP
-
+FROM openjdk:8-jdk-alpine
 EXPOSE 8080
-
-CMD ["java", "-jar", "dataservice-0.0.1-SNAPSHOT.jar"]
+VOLUME /tmp
+ARG LIBS=app/build/libs
+COPY --from=builder ${LIBS}/ /app/lib
+CMD ["java", "-jar", "./app/lib/dataservice-0.0.1-SNAPSHOT.jar"]
