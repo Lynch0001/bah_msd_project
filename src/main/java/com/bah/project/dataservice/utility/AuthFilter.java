@@ -92,7 +92,16 @@ public class AuthFilter implements Filter {
 				
 			} else {
 				// reject request and return error instead of data
-				((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST, "Bad Request - Invalid API"); // if
+				if(uri.startsWith("/api/actuator")) {
+					log.debug("AUTH FILTER - Actuator request");
+					
+					// continue to API 
+					
+					chain.doFilter(request, response);
+					return;
+				}
+				else {
+				((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST, "Bad Request - Invalid API"); }// if
 			} // else
 		} catch (Exception e) {
 			log.debug("Exception message: {}", e.getMessage());
