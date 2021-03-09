@@ -20,10 +20,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.bah.project.dataservice.domain.Customer;
 import com.bah.project.dataservice.service.CustomerService;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+
 @RestController
 public class CustomerController {
 
 	private static Logger log = LoggerFactory.getLogger(CustomerController.class);
+	
+    @Autowired
+    private Tracer tracer;
 	
 	@Autowired
 	private CustomerService customerService;
@@ -59,8 +65,13 @@ public class CustomerController {
 	
 	@GetMapping("/customers")
 	public Iterable<Customer> getAllCustomers() {
+
+		log.debug("Customer Controller - Get All Method");
+		
+        Span span = tracer.buildSpan("get customers").start();
+		span.setTag("http.status_code", 201);
 		Iterable<Customer> customers = customerService.getAllCustomers();
-		log.debug("Customer Controller - Get All - customer list: {}", customers);
+		span.finish();
 		return customers;
 
 	}

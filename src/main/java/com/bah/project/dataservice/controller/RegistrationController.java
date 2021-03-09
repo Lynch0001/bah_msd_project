@@ -14,12 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import com.bah.project.dataservice.domain.Registration;
 import com.bah.project.dataservice.service.RegistrationService;
+
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestController
 public class RegistrationController {
 
+    @Autowired
+    private Tracer tracer;
 
 	@Autowired
 	private RegistrationService registrationService;
@@ -31,7 +37,12 @@ public class RegistrationController {
 	
 	@GetMapping("/registrations")
 	public Iterable<Registration> getAllRegistrations() {
-		return registrationService.getAllRegistrations();
+		
+        Span span = tracer.buildSpan("get registrations").start();
+		span.setTag("http.status_code", 201);
+		Iterable<Registration> registrations = registrationService.getAllRegistrations();
+		span.finish();
+		return registrations;
 
 	}
 

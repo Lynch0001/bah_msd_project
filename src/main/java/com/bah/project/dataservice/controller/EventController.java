@@ -14,12 +14,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import com.bah.project.dataservice.domain.Event;
 import com.bah.project.dataservice.service.EventService;
+
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestController
 public class EventController {
 
+    @Autowired
+    private Tracer tracer;
+	
 	@Autowired
 	private EventService eventService;
 	
@@ -30,7 +37,13 @@ public class EventController {
 	
 	@GetMapping("/events")
 	public Iterable<Event> getAllEvents() {
-		return eventService.getAllEvents();
+
+        Span span = tracer.buildSpan("get events").start();
+		span.setTag("http.status_code", 201);
+		Iterable<Event> events = eventService.getAllEvents();
+		span.finish();
+		return events;
+		
 	}
 	
 	@PostMapping("/events")
