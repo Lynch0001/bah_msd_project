@@ -9,9 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DataserviceApplicationTests {
 
 	
-	/*
-	 * @Test void contextLoads() { assertTrue(true); }
-	 */
+	
+	  @Test 
+	  void contextLoads() { }
+	 
 	 
 
 }
